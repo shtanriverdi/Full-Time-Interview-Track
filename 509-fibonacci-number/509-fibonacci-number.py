@@ -1,18 +1,15 @@
 class Solution:
     def fib(self, n: int) -> int:
-        memo = [-1] * max(3, n + 1)
-        return self.helper(n, memo)
-
-    def helper(self, n, memo):
-        if memo[n] != -1:
-            return memo[n]
-        if n == 0:
-            return 0
         if n < 2:
-            return 1
+            return n
         
-        l = self.helper(n - 1, memo)
-        r = self.helper(n - 2, memo)
+        prev = 1
+        prev2 = 0
+        cur = 1
         
-        memo[n] = l + r
-        return l + r
+        for _ in range(2, n + 1):
+            cur = prev + prev2
+            prev2 = prev
+            prev = cur
+        
+        return cur
