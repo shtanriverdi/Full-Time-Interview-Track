@@ -3,7 +3,6 @@ import heapq
 class Solution:
     def fillCups(self, amount: List[int]) -> int:
         amount.sort(reverse=True)
-        print(amount)
         
         seconds = 0
         while amount[0] != 0:
