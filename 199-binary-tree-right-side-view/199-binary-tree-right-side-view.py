@@ -15,16 +15,16 @@ class Solution:
         todo = deque([root])
         while todo:
             nodes_count_at_current_level = len(todo)
-            nodes_at_current_level = []
+            last_processed_node = None
             for _ in range(nodes_count_at_current_level):
                 cur = todo.popleft()
-                nodes_at_current_level.append(cur.val)
+                last_processed_node = cur.val
                 if cur.left:
                     todo.append(cur.left)
                 if cur.right:
                     todo.append(cur.right)
                     
-            if nodes_at_current_level:
-                result.append(nodes_at_current_level[-1])
+            if last_processed_node != None:
+                result.append(last_processed_node)
         
         return result
