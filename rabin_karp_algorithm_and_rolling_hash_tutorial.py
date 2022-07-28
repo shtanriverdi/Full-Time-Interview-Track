@@ -1,3 +1,6 @@
+# String Hashing by using Rabin Karp Algorithm
+
+# 1) Calculation of the hash of a string
 # Simple function that calculates hash value of a string by using polynomial rolling hash
 def main():
     hash_value = compute_hash("abc")
