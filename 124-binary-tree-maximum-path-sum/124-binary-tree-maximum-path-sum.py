@@ -6,25 +6,25 @@
 #         self.right = right
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
-        answer = self.dfs(root)
+        answer = [ root.val ]
+        self.dfs(root, answer)
         return answer[0]
     
-    def dfs(self, current) -> int:
+    def dfs(self, current, answer) -> int:
         if current == None:
-            return [-1001, -1001]
+            return -1001
         
-        left_answer, left_max_path_sum_so_far = self.dfs(current.left)
-        right_answer, right_max_path_sum_so_far = self.dfs(current.right)
-        
-        # Calculate the new updated answer
-        new_answer = max(left_answer, current.val, right_answer,
-                         current.val + left_max_path_sum_so_far,
-                        current.val + right_max_path_sum_so_far,
-                        current.val + left_max_path_sum_so_far + right_max_path_sum_so_far)
-        
+        left_max_path_sum_so_far = self.dfs(current.left, answer)
+        right_max_path_sum_so_far = self.dfs(current.right, answer)
+
         # Calculate the updated max path sum so far
         new_max_path_sum = max(left_max_path_sum_so_far + current.val,
                                right_max_path_sum_so_far + current.val,
                               current.val)
         
-        return [new_answer, new_max_path_sum]
+        # Update the answer
+        answer[0] = max(answer[0], current.val,
+                         new_max_path_sum,
+                        current.val + left_max_path_sum_so_far + right_max_path_sum_so_far)
+        
+        return new_max_path_sum
