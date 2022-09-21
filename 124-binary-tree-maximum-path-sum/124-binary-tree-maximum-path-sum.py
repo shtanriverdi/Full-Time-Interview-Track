@@ -11,7 +11,7 @@ class Solution:
     
     def dfs(self, current) -> int:
         if current == None:
-            return [-inf, -inf]
+            return [-1001, -1001]
         
         left_answer, left_max_path_sum_so_far = self.dfs(current.left)
         right_answer, right_max_path_sum_so_far = self.dfs(current.right)
