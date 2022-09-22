@@ -1,29 +1,37 @@
 class Solution:
     def trap(self, heights: List[int]) -> int:
         n = len(heights)
-
-        # Calculate right max
-        right_max = [0] * n
-        prev_right_max = -inf
-        for index in range(n - 1, -1, -1):
-            height = heights[index]
-            if height > prev_right_max:
-                prev_right_max = height
-            right_max[index] = prev_right_max
         
-        # Calculate left max
-        left_max = []
+        prev_right_max = -inf
         prev_left_max = -inf
-        for height in heights:
-            if height > prev_left_max:
-                prev_left_max = height
-            left_max.append(prev_left_max)
-            
-        # Calculate the total trapped water
+        
+        left_index = 0
+        right_index = n - 1
+        
         total_trapped_water = 0
-        for i in range(n):
-            left_max_bar = left_max[i]
-            right_max_bar = right_max[i]
-            total_trapped_water += min(left_max_bar, right_max_bar) - heights[i]
+
+        while left_index < right_index:
+            # Update the previous left and right max bars
+            prev_right_max = max(prev_right_max, heights[right_index])
+            prev_left_max = max(prev_left_max, heights[left_index])
+            current_min_bar = min(prev_right_max, prev_left_max)
+            
+            # Calculate contribution for right bar
+            right_bar = heights[right_index]
+            possible_right_contribution = current_min_bar - right_bar
+            if possible_right_contribution > 0:
+                total_trapped_water += possible_right_contribution
+            
+            # Calculate contribution for left bar
+            left_bar = heights[left_index]
+            possible_left_contribution = current_min_bar - left_bar
+            if possible_left_contribution > 0:
+                total_trapped_water += possible_left_contribution
+            
+            # Update the pointers
+            if right_bar <= left_bar:
+                right_index -= 1
+            else:
+                left_index += 1
             
         return total_trapped_water
