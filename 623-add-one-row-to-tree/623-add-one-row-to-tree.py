@@ -1,36 +1,30 @@
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-        
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def addOneRow(self, root: Optional[TreeNode], val: int, depth: int) -> Optional[TreeNode]:
-        dummy = TreeNode(1453)
-        dummy.left = root
+        newRoot = TreeNode(1453)
+        newRoot.left = root
+        self.dfs(newRoot, depth - 1, val)
+        return newRoot.left
         
-        self.dfs(dummy, 0, depth - 1, val)
-        
-        return dummy.left
-        
-    def dfs(self, current_node, current_dept, wanted_depth, val):
-        if current_node == None:
+    def dfs(self, current, depth, val_to_add):
+        if current == None:
             return
         
-        if current_dept == wanted_depth:
-            self.add_nodes_with_value(current_node, val)
+        if depth == 0:
+            left_subtree = current.left
+            right_subtree = current.right
+            
+            current.left = TreeNode(val_to_add)
+            current.left.left = left_subtree
+            
+            current.right = TreeNode(val_to_add)
+            current.right.right = right_subtree
             return
         
-        self.dfs(current_node.left, current_dept + 1, wanted_depth, val)
-        self.dfs(current_node.right, current_dept + 1, wanted_depth, val)
-    
-    def add_nodes_with_value(self, parent_node, val):
-        left_subtree = parent_node.left
-        right_subtree = parent_node.right
-        
-        parent_node.left = TreeNode(val)
-        parent_node.right = TreeNode(val)
-        
-        parent_node.left.left = left_subtree
-        parent_node.right.right = right_subtree
+        self.dfs(current.left, depth - 1, val_to_add)
+        self.dfs(current.right, depth - 1, val_to_add)
