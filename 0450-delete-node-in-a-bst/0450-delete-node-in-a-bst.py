@@ -40,10 +40,8 @@ class Solution:
                 current.val = successor.val
                 current.right = self.findAndDeleteNodeHelper(current.right, successor.val)
             elif predecessor:
-                predecessor = self.findPredecessor(current)
-                if predecessor:
-                    current.val = predecessor.val
-                    current.left = self.findAndDeleteNodeHelper(current.left, predecessor.val)
+                current.val = predecessor.val
+                current.left = self.findAndDeleteNodeHelper(current.left, predecessor.val)
             else:
                 return None
                 
