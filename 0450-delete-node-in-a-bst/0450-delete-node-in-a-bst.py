@@ -35,11 +35,13 @@ class Solution:
             current.right = self.findAndDeleteNodeHelper(current.right, key)
         else:
             successor = self.findSuccessor(current)
-            predecessor = self.findPredecessor(current) # TODO - Optimize
             if successor:
                 current.val = successor.val
                 current.right = self.findAndDeleteNodeHelper(current.right, successor.val)
-            elif predecessor:
+                return current
+                
+            predecessor = self.findPredecessor(current) # TODO - Optimize
+            if predecessor:
                 current.val = predecessor.val
                 current.left = self.findAndDeleteNodeHelper(current.left, predecessor.val)
             else:
