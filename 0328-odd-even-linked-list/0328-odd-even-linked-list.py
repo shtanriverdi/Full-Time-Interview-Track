@@ -4,26 +4,24 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def moveEvensToBack(self, start, end):
-        cur = start.next
-        while cur and cur != end:
-            # Swap
-            cur.val, end.val = end.val, cur.val
-            cur = cur.next
-    
     def oddEvenList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         if head == None:
             return head
         
-        slow = head.next
-        fast = slow.next if slow else None
+        evenHead = head.next
+        even = head.next
+        odd = head
         
-        while slow and fast:
-            # Swap
-            slow.val, fast.val = fast.val, slow.val
-            # Preserve the ordering of evens
-            self.moveEvensToBack(slow, fast)
-            slow = slow.next
-            fast = fast.next.next if fast.next else None
-            
+        while even and even.next:
+            # Rewire the links
+            odd.next = odd.next.next
+            even.next = even.next.next
+            # Move the pointers
+            odd = odd.next
+            even = even.next
+
+        # Connect odd tail to even head
+        odd.next = evenHead
+        
         return head
+        
