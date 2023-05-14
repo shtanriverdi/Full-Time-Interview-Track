@@ -16,12 +16,6 @@ class Solution:
                 if row + 1 < M and grid[row + 1][col + 1] > grid[row][col]:
                     dp[row][col] = max(dp[row + 1][col + 1] + 1, dp[row][col])
                     
-                # for i in range(M):
-                #     for j in range(N):
-                #         print(dp[i][j], end=" ")
-                #     print()
-                # print()
-        
         answer = 0
         for i in range(M):
             answer = max(answer, dp[i][0])
